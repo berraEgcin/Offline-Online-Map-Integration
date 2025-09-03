@@ -1,0 +1,31 @@
+Başlangıç Akışı:
+  1. HelloApplication başlatılır
+  2. FXML yüklenir ve HelloController oluşturulur
+  3. initialize() metodu çağrılır:
+   - NetworkConnection oluşturulur
+   - İlk MapView oluşturulur ve yapılandırılır
+   - MapView StackPane'e eklenir
+Tile Yükleme Akışı:
+  1. MapView bir tile ihtiyacı olduğunda:
+   - EsriTileRetriever.loadTile(zoom,x,y) çağrılır
+   - NetworkConnection.isOffline() kontrol edilir
+   - Duruma göre TileManager'dan tile istenir
+Online/Offline Geçiş Akışı (Yeni Yapı):
+  1. Kullanıcı offline/online butonuna tıklar
+  2. goOfflineUI() çağrılır:
+   - Mevcut haritanın durumu kaydedilir (konum, zoom)
+   - NetworkConnection durumu güncellenir
+   - Yeni bir MapView oluşturulur
+   - Eski haritanın durumu yeni haritaya aktarılır
+   - Eski harita kaldırılır, yeni harita eklenir
+TileManager Çalışma Mantığı:
+  Online Modda:
+    1. getTileIfOnline çağrılır
+    2. Önce cache kontrol edilir
+    3. Cache'de yoksa indirilir ve cache'e kaydedilir
+    4. Tile döndürülür
+    
+   Offline Modda:
+    1. getTileIfOffline çağrılır
+    2. Sadece cache kontrol edilir
+    3. Varsa döndürülür, yoksa null döner
